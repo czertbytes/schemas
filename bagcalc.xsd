@@ -1,0 +1,494 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Names">
+    <xs:sequence>
+      <xs:element name="name" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="lang" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Group">
+    <xs:sequence>
+      <xs:element name="name" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="lang" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Descriptions">
+    <xs:sequence>
+      <xs:element name="description" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="lang" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Notes">
+    <xs:sequence>
+      <xs:element name="note" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="lang" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Values">
+    <xs:sequence>
+      <xs:element name="value" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="lang" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Trips">
+    <xs:sequence>
+      <xs:element name="domestic" minOccurs="0"/>
+      <xs:element name="continental" minOccurs="0"/>
+      <xs:element name="intercontinental" minOccurs="0"/>
+      <xs:element name="from" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="country" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element name="airport" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+        <xs:element name="to" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="country" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+              <xs:element name="airport" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FreeBaggages">
+    <xs:sequence>
+      <xs:element name="free-baggage" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="subject" use="required"/>
+              <xs:attribute type="xs:string" name="operation" use="required"/>
+              <xs:attribute type="xs:string" name="value" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="db">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="airlines">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="airline" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="name"/>
+                    <xs:element type="xs:string" name="url"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="code" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="traveller-types">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="traveller-type" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="Names" name="names"/>
+                    <xs:element type="Descriptions" name="descriptions"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="baggages">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="baggage" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="Names" name="names"/>
+                    <xs:element type="Descriptions" name="descriptions"/>
+                    <xs:element type="Notes" name="notes"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="customer-statuses">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="customer-status" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="airlines" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="airline" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="traveller-types" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="traveller-type" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="Names" name="names"/>
+                    <xs:element type="Descriptions" name="descriptions"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="travel-classes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="travel-class" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="airlines" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="airline" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="Trips" name="trips" minOccurs="0"/>
+                    <xs:element type="Names" name="names"/>
+                    <xs:element type="Descriptions" name="descriptions"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tariffs">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="tariff" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="travel-classes" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="travel-class" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="Trips" name="trips" minOccurs="0"/>
+                    <xs:element type="Names" name="names"/>
+                    <xs:element type="Descriptions" name="descriptions"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="free-baggage-allowance">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="rule" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="airlines" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="airline" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="customer-statuses" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="customer-status" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="traveller-types" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="traveller-type" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="travel-classes" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="travel-class" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="tariffs" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="tariff" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="Trips" name="trips" minOccurs="0"/>
+                    <xs:element name="valid" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="from" type="xs:string" minOccurs="0"/>
+                          <xs:element name="to" type="xs:string" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="reset-baggages" minOccurs="0" />
+                    <xs:element name="baggages">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="baggage" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="Descriptions" name="descriptions"/>
+                    <xs:element type="Notes" name="notes"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="extra-notes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="extra-note" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="airlines" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="airline" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="customer-statuses" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="customer-status" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="traveller-types" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="traveller-type" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="travel-classes" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="travel-class" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="tariffs" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="tariff" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="Trips" name="trips" minOccurs="0"/>
+                    <xs:element type="Values" name="values"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="products">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="product" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="airlines" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="airline" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="FreeBaggages" name="free-baggages" minOccurs="0"/>
+                    <xs:element name="customer-statuses" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="customer-status" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="traveller-types" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="traveller-type" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="travel-classes" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="travel-class" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="tariffs" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="tariff" type="xs:string" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="Trips" name="trips" minOccurs="0"/>
+                    <xs:element type="Names" name="names"/>
+                    <xs:element type="Group" name="group"/>
+                    <xs:element type="Descriptions" name="descriptions"/>
+                    <xs:element type="Notes" name="notes"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="required"/>
+                  <xs:attribute type="xs:string" name="label" use="required"/>
+                  <xs:attribute type="xs:boolean" name="online" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="price-zones">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="price-zone" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="item" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="value" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:integer">
+                                  <xs:attribute type="xs:string" name="currency" use="required"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      <xs:attribute type="xs:string" name="id" use="required"/>
+                    </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="value" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="countries">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="country" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="continental" minOccurs="0"/>
+                    <xs:element type="xs:string" name="price-group"/>
+                    <xs:element name="area"/>
+                    <xs:element name="subarea"/>
+                    <xs:element type="Names" name="names"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="code" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="airports">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="airport" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="coordinates">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="lat"/>
+                          <xs:element type="xs:string" name="lon"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="hub" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="airlines" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="airline" type="xs:string" maxOccurs="unbounded"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="country"/>
+                    <xs:element type="xs:string" name="price-group" minOccurs="0"/>
+                    <xs:element name="city">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="Names" name="names"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="names" type="Names"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="code" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
